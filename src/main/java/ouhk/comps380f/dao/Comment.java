@@ -1,5 +1,7 @@
 package ouhk.comps380f.dao;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,7 +12,9 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String username;
+    @ManyToOne
+    private User username;
+
     private String content;
 
     @ManyToOne
@@ -24,11 +28,11 @@ public class Comment {
         this.id = id;
     }
 
-    public String getUsername() {
+    public User getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(User username) {
         this.username = username;
     }
 

@@ -1,6 +1,8 @@
 package ouhk.comps380f.dao;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table
@@ -15,6 +17,15 @@ public class Item {
     private Double price;
     private Boolean available;
 
+    @OneToMany
+    private final Set<Comment> comments = new HashSet<>();
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    @OneToMany
+    private final Set<Order> orders = new HashSet<>();
 
     public Integer getId() {
         return id;

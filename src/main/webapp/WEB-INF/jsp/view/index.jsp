@@ -9,10 +9,10 @@
 <html>
 <head>
     <title>Hello Spring MVC!</title>
-    <%@include file="parts/meta.jsp"%>
+    <%@include file="../parts/meta.jsp"%>
 </head>
 <body>
-<%@include file="parts/header.jsp"%>
+<%@include file="../parts/header.jsp"%>
    this is a index page
 </body>
 </html>

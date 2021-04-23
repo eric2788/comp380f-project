@@ -3,13 +3,20 @@ package ouhk.comps380f.dao;
 import javax.persistence.*;
 
 
+@Entity
 @Table
 public class Order {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer orderId;
+
     @ManyToOne
     private User username;
+
     @ManyToOne
-    private Item id;
+    private Item itemId;
+
     private Integer amount;
 
     public User getUsername() {
@@ -20,12 +27,16 @@ public class Order {
         this.username = username;
     }
 
-    public Item getId() {
-        return id;
+    public Integer getOrderId() {
+        return orderId;
     }
 
-    public void setId(Item id) {
-        this.id = id;
+    public Item getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Item itemId) {
+        this.itemId = itemId;
     }
 
     public Integer getAmount() {

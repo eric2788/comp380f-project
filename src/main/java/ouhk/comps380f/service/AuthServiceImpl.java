@@ -7,20 +7,25 @@ import ouhk.comps380f.dao.User;
 import ouhk.comps380f.repository.UserRepository;
 
 import java.util.Base64;
+import java.util.Optional;
 
 @Service
-public class AdminServiceImpl implements AdminService{
+public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
 
     @Autowired
-    public AdminServiceImpl(UserRepository userRepository) {
+    public AuthServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
-    public boolean login(String username, String password) {
-        return userRepository.findById(username).map(u -> u.getPassword().equals(hash(password))).orElse(false);
+    public User login(String username, String password) {
+        Optional<User> user = userRepository.findById(username);
+        if (user.isPresent() && user.get().getPassword().equals(hash(password))){
+            return user.get();
+        }
+        return null;
     }
 
     @Override
@@ -28,6 +33,7 @@ public class AdminServiceImpl implements AdminService{
         if (userRepository.findById(user.getUsername()).isPresent()){
             return false;
         }
+        user.setPassword(hash(user.getPassword()));
         userRepository.save(user);
         return true;
     }
