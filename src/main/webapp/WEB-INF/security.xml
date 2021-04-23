@@ -5,16 +5,29 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/security
        http://www.springframework.org/schema/security/spring-security.xsd">
-    <!--b:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+
+    <http auto-config="true">
+        <logout  logout-url="/logout"
+                 logout-success-url="/login?logout"
+                 invalidate-session="true"
+                 delete-cookies="JSESSIONID" />
+        <remember-me key="uniqueAndSecret"
+                     token-validity-seconds="86400"
+                     remember-me-parameter="remember-me" />
+    </http>
+    <b:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <b:property name="driverClassName" value="org.apache.derby.jdbc.ClientDriver" />
-        <b:property name="url" value="jdbc:derby://localhost:1527/test" />
+        <b:property name="url" value="jdbc:derby://localhost:1527/comps380f" />
         <b:property name="username" value="root"/>
         <b:property name="password" value="1234"/>
-    </b:bean-->
+    </b:bean>
 
-    <http />
-    <user-service>
-        <user name="keith" password="{noop}keithpw" authorities="ROLE_USER, ROLE_ADMIN"/>
-        <user name="vanessa" password="{noop}vanessapw" authorities="ROLE_USER" />
-    </user-service>
+    <authentication-manager>
+        <authentication-provider>
+            <jdbc-user-service data-source-ref="dataSource"
+                               users-by-username-query="SELECT username, password, true FROM User WHERE username=?"
+                               authorities-by-username-query="SELECT username, admin FROM User WHERE username=?"
+            />
+        </authentication-provider>
+    </authentication-manager>
 </b:beans>

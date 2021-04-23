@@ -3,6 +3,8 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
@@ -11,7 +13,7 @@
        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 
-    <context:component-scan base-package="start.springmvc.controller" />
+    <context:component-scan base-package="ouhk.comps380f.controller, ouhk.comps380f.dao" />
     <mvc:annotation-driven />
 
     <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
@@ -19,5 +21,39 @@
         <property name="suffix" value=".jsp" />
     </bean>
 
+    <!-- hibernate
 
+    <bean id="hibernate5SessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="packagesToScan">
+            <list><value>ouhk.comps380f.dao</value></list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.DerbyTenFiveDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">create</prop>
+                <prop key="hibernate.hibernate.hbm2ddl.auto">create</prop>
+            </props>
+        </property>
+    </bean>
+
+    -->
+
+    <!--Create default configuration for Hibernate -->
+    <bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+
+    <!--Configure the entity manager factory bean -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>
+        <!--Set JPA properties -->
+        <property name="jpaProperties">
+            <props><prop key="hibernate.dialect">org.hibernate.dialect.DerbyTenFiveDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">create</prop>
+            </props>
+        </property>
+        <!--Set base package of your entities -->
+        <property name="packagesToScan" value="ouhk.comps380f.dao"/></bean>
 </beans>
