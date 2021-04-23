@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b:beans xmlns="http://www.springframework.org/schema/security" xmlns:b="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd">
+    <!--b:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <b:property name="driverClassName" value="org.apache.derby.jdbc.ClientDriver" />
+        <b:property name="url" value="jdbc:derby://localhost:1527/test" />
+        <b:property name="username" value="root"/>
+        <b:property name="password" value="1234"/>
+    </b:bean-->
+
+    <http />
+    <user-service>
+        <user name="keith" password="{noop}keithpw" authorities="ROLE_USER, ROLE_ADMIN"/>
+        <user name="vanessa" password="{noop}vanessapw" authorities="ROLE_USER" />
+    </user-service>
+</b:beans>
