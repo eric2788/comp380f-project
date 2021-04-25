@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: User
-  Date: 4/23/2021
-  Time: 6:24 PM
+  Date: 4/25/2021
+  Time: 10:18 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -13,10 +13,8 @@
 </head>
 <body>
 <%@include file="../parts/header.jsp"%>
-    <ul>
-        <li>ABC</li>
-        <li>XYZ</li>
-    </ul>
-<button></button>
+<ul>
+    THIS IS ADMIN PAGE
+</ul>
 </body>
 </html>

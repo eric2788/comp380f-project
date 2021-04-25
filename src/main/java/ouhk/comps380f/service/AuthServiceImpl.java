@@ -3,7 +3,7 @@ package ouhk.comps380f.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
-import ouhk.comps380f.dao.User;
+import ouhk.comps380f.dao.Account;
 import ouhk.comps380f.repository.UserRepository;
 
 import java.util.Base64;
@@ -20,8 +20,8 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public User login(String username, String password) {
-        Optional<User> user = userRepository.findById(username);
+    public Account login(String username, String password) {
+        Optional<Account> user = userRepository.findById(username);
         if (user.isPresent() && user.get().getPassword().equals(hash(password))){
             return user.get();
         }
@@ -29,12 +29,12 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public boolean register(User user) {
-        if (userRepository.findById(user.getUsername()).isPresent()){
+    public boolean register(Account account) {
+        if (userRepository.findById(account.getUsername()).isPresent()){
             return false;
         }
-        user.setPassword(hash(user.getPassword()));
-        userRepository.save(user);
+        account.setPassword(hash(account.getPassword()));
+        userRepository.save(account);
         return true;
     }
 

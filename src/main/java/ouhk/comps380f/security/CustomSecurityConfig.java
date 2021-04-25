@@ -1,8 +1,8 @@
-package ouhk.comps380f;
+package ouhk.comps380f.security;
 
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,9 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ouhk.comps380f.security.AuthenticationProvider;
 
-@ComponentScan("ouhk.comps380f.security")
+
 @Configuration
 @EnableWebSecurity
 public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -26,28 +25,26 @@ public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider);
-        auth.inMemoryAuthentication()
+        System.out.println("CONFIGURING AuthenticationManager");
+        auth
+                .authenticationProvider(authenticationProvider)
+                .inMemoryAuthentication()
                 .withUser("root")
-                .password("root1234")
+                .password("{noop}root1234")
                 .roles("USER", "ADMIN");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        System.out.println("CONFIGURING HttpSecurity");
         http.
                 logout().logoutUrl("/logout").logoutSuccessUrl("/").invalidateHttpSession(true).deleteCookies("JSESSIONID")
                 .and()
                 .rememberMe().key("unique-key").tokenValiditySeconds(86400).rememberMeParameter("remember-me")
                 .and()
+                .formLogin().loginPage("/login").failureUrl("/login?error").usernameParameter("username").passwordParameter("password")
+                .and()
                 .authorizeRequests()
-                .antMatchers("/update/**", "/delete/**", "/create/**", "/carts", "/comment/**")
-                .hasAnyRole("ADMIN")
-                .antMatchers("/admin/**").authenticated();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
+                .antMatchers("/admin").hasAnyRole("ADMIN");
     }
 }

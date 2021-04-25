@@ -1,12 +1,14 @@
 package ouhk.comps380f.dao;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+
 @Entity
 @Table
-public class Item {
+public class ShopItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +25,6 @@ public class Item {
     public Set<Comment> getComments() {
         return comments;
     }
-
-    @OneToMany
-    private final Set<Order> orders = new HashSet<>();
 
     public Integer getId() {
         return id;

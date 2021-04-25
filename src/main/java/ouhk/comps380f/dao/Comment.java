@@ -1,40 +1,46 @@
 package ouhk.comps380f.dao;
 
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
+import java.io.Serializable;
+
 
 @Entity
 @Table
-public class Comment {
+public class Comment implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+
     @ManyToOne
-    private User username;
+    private Account account;
 
     private String content;
 
     @ManyToOne
-    private Item item;
+    private ShopItem item;
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public ShopItem getItem() {
+        return item;
+    }
+
+    public void setItem(ShopItem item) {
+        this.item = item;
+    }
 
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public User getUsername() {
-        return username;
-    }
-
-    public void setUsername(User username) {
-        this.username = username;
-    }
 
     public String getContent() {
         return content;
@@ -44,11 +50,4 @@ public class Comment {
         this.content = content;
     }
 
-    public Item getItem() {
-        return item;
-    }
-
-    public void setItem(Item item) {
-        this.item = item;
-    }
 }

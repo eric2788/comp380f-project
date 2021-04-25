@@ -6,9 +6,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
 import org.springframework.stereotype.Component;
-import ouhk.comps380f.dao.User;
+import ouhk.comps380f.dao.Account;
 import ouhk.comps380f.service.AuthService;
 
 import java.util.ArrayList;
@@ -24,20 +23,20 @@ public class AuthenticationProvider implements org.springframework.security.auth
         this.authService = authService;
     }
 
-
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String name = authentication.getName();
         String password = authentication.getCredentials().toString();
-        User user = authService.login(name, password);
-        if (user == null) return null;
+        Account account = authService.login(name, password);
+        if (account == null) return null;
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("USER"));
-        if (user.getAdmin()){
+        if (account.getAdmin()) {
             authorities.add(new SimpleGrantedAuthority("ADMIN"));
         }
         return new UsernamePasswordAuthenticationToken(name, password, authorities);
     }
+
 
     @Override
     public boolean supports(Class<?> aClass) {
