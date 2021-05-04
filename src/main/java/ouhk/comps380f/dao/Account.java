@@ -68,4 +68,17 @@ public class Account implements Serializable {
     public void setAdmin(Boolean admin) {
         this.admin = admin;
     }
+
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", phone=" + phone +
+                ", fullname='" + fullname + '\'' +
+                ", address='" + address + '\'' +
+                ", admin=" + admin +
+                '}';
+    }
 }
