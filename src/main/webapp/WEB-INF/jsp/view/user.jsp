@@ -35,7 +35,7 @@
         <div class="mb-3 row">
             <form:label path="phone" cssClass="col-sm-2 col-form-label">Phone: </form:label>
             <div class="col-sm-10">
-                <form:input cssClass="form-control" path="phone" maxlength="8" type="number" readonly="${mode == 'view'}"/>
+                <form:input cssClass="form-control" path="phone" maxlength="8" max="99999999" type="number" readonly="${mode == 'view'}"/>
             </div>
             <form:errors path="phone" cssClass="ui-state-error-text"/>
         </div>
@@ -59,14 +59,16 @@
         <div class="mb-3 row">
             <form:label path="admin" cssClass="form-check-label">Is Admin: </form:label>
             <div class="col-sm-10">
-                <form:checkbox path="admin" cssClass="form-check-input" readonly="${mode == 'view'}"/>
+                <form:checkbox path="admin" cssClass="form-check-input" disabled="${mode == 'view'}"/>
             </div>
             <form:errors path="admin" cssClass="ui-state-error-text"/>
         </div>
 
         <br />
 
-        <input type="submit" name="update" value="Update" />
+        <c:if test="${mode != 'view'}">
+            <input type="submit" name="update" value="Update" />
+        </c:if>
 
     </form:form>
 </div>

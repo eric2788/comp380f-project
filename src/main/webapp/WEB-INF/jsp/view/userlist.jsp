@@ -18,8 +18,9 @@
         <c:forEach var="user" items="${users}">
             <li class="list-group-item">
                     ${user.username} (${user.admin ? 'User': 'Admin'})
-                <a href="<c:url value="/user/edit?id=${user.username}"/>">Edit</a>
-                <a href="<c:url value="/user/delete?id=${user.username}"/>">Delete</a>
+                        <a href="<c:url value="/user/view?id=${user.username}"/>">View</a>
+                        <a href="<c:url value="/user/edit?id=${user.username}"/>">Edit</a>
+                        <a href="<c:url value="/user/delete?id=${user.username}"/>">Delete</a>
             </li>
         </c:forEach>
     </ul>
