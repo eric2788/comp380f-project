@@ -15,14 +15,17 @@
 <%@include file="../parts/header.jsp" %>
 <div class="container">
     <ul class="list-group">
-        <c:forEach var="user" items="${shopItem}">
+        <c:forEach var="item" items="${items}">
             <li class="list-group-item">
-                    <a href="<c:url value="/shopitem/view?id=${shopItem.itemname}"/>">${shopItem.itemname} </a>
-                        <a href="<c:url value="/shopitem/edit?id=${shopItem.itemname}"/>">Edit</a>
-                        <a href="<c:url value="/shopitem/delete?id=${shopItem.itemname}"/>">Delete</a>
+                    <a href="<c:url value="/shopitem/view?id=${item.name}"/> ">${item.name}</a>
+                    <a href="<c:url value="/shopitem/edit?id=${item.name}"/> ">Edit</a>
+                <a href="<c:url value="/shopitem/delete?id=${item.name}"/> ">Delete</a>
             </li>
         </c:forEach>
     </ul>
+    <security:authorize access="hasRole('ADMIN')" >
+        <a href="<c:url value="/shopitem/add" />"><button class="btn btn-primary">Add</button></a>
+    </security:authorize>
 </div>
 </body>
 </html>
