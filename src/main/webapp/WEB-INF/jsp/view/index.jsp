@@ -14,17 +14,20 @@
 <body>
 <%@include file="../parts/header.jsp" %>
 <div class="container">
+    <centre><h2>Fast Food Ordering System</h2></centre>
     <ul class="list-group">
         <c:forEach var="item" items="${items}">
             <li class="list-group-item">
-                    <a href="<c:url value="/shopitem/view?id=${item.name}"/> ">${item.name}</a>
-                    <a href="<c:url value="/shopitem/edit?id=${item.name}"/> ">Edit</a>
-                <a href="<c:url value="/shopitem/delete?id=${item.name}"/> ">Delete</a>
+                    <!-- <a href="addNewProduct.jsp">Add New Product</a> -->
+                    <a href="<c:url value="/item?id=${item.name}"/> ">${item.name}</a>
+                    <a href="<c:url value="/item/add?id=${item.name}"/> ">Add</a>
+                    <a href="<c:url value="/item/edit?id=${item.name}"/> ">Edit</a>
+                    <a href="<c:url value="/item/delete?id=${item.name}"/> ">Delete</a>
             </li>
         </c:forEach>
     </ul>
     <security:authorize access="hasRole('ADMIN')" >
-        <a href="<c:url value="/shopitem/add" />"><button class="btn btn-primary">Add</button></a>
+        <a href="<c:url value="/item/add" />"><button class="btn btn-primary">Add</button></a>
     </security:authorize>
 </div>
 </body>
