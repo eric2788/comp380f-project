@@ -24,7 +24,9 @@
             </li>
         </c:forEach>
     </ul>
-    <a href="<c:url value="/user/add" />"><button class="btn btn-primary">Add</button></a>
+    <security:authorize access="hasRole('ADMIN')" >
+        <a href="<c:url value="/user/add" />"><button class="btn btn-primary">Add</button></a>
+    </security:authorize>
 </div>
 </body>
 </html>

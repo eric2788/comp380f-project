@@ -8,15 +8,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Hello Spring MVC!</title>
-    <%@include file="../parts/meta.jsp"%>
+    <title>Index</title>
+    <%@include file="../parts/meta.jsp" %>
 </head>
 <body>
-<%@include file="../parts/header.jsp"%>
-    <ul>
-        <li>ABC</li>
-        <li>XYZ</li>
+<%@include file="../parts/header.jsp" %>
+<div class="container">
+    <ul class="list-group">
+        <c:forEach var="item" items="${items}">
+            <li class="list-group-item">
+                    <a href="<c:url value="/shopitem/view?id=${item.name}"/> ">${item.name}</a>
+                    <a href="<c:url value="/shopitem/edit?id=${item.name}"/> ">Edit</a>
+                <a href="<c:url value="/shopitem/delete?id=${item.name}"/> ">Delete</a>
+            </li>
+        </c:forEach>
     </ul>
-<button></button>
+    <security:authorize access="hasRole('ADMIN')" >
+        <a href="<c:url value="/shopitem/add" />"><button class="btn btn-primary">Add</button></a>
+    </security:authorize>
+</div>
 </body>
 </html>
