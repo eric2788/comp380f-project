@@ -1,6 +1,6 @@
 
 
-<%@page contentType="text/html" pageEncoding="x-windows-950"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,8 +8,8 @@
         <title>comment</title>
     </head>
     <body>
-        <form:form method="POST" enctype="multipart/form-data" modelAttribute="comment">
-            <form:textarea path="content" rows="5" cols="30" /><br /><br />
+        <form:form method="POST" modelAttribute="comment">
+            <form:textarea path="body" rows="5" cols="30" /><br /><br />
             <input type="submit" value="Submit"/>
         </form:form>
     </body>

@@ -1,24 +1,27 @@
 package ouhk.comps380f.dao;
 
 import javax.persistence.*;
+import java.util.Base64;
 
 @Entity
 public class Photo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
+
+    @Basic(fetch = FetchType.LAZY)
+    @Lob
+    private byte[] content;
 
     @ManyToOne
     private ShopItem item;
-    private Byte[] content;
 
-
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -30,11 +33,15 @@ public class Photo {
         this.item = item;
     }
 
-    public Byte[] getContent() {
+    public byte[] getContent() {
         return content;
     }
 
-    public void setContent(Byte[] content) {
+    public void setContent(byte[] content) {
         this.content = content;
+    }
+
+    public String getBase64(){
+        return Base64.getEncoder().encodeToString(content);
     }
 }

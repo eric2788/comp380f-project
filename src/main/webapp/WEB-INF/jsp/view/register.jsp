@@ -1,28 +1,23 @@
 <%--
   Created by IntelliJ IDEA.
   User: User
-  Date: 5/4/2021
-  Time: 3:58 PM
+  Date: 5/9/2021
+  Time: 2:55 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>${mode == 'add' ? 'Add' : mode == 'view' ? 'View' : 'Update'} User</title>
+    <title>Register</title>
     <%@include file="../parts/meta.jsp"%>
 </head>
 <body>
-<%@include file="../parts/header.jsp"%>
-
-<div class="container">
-    <% if (request.getParameter("updated") != null) { %>
-        <div class="alert alert-success">Updated Successful</div>
-    <% } %>
-    <form:form method="post" modelAttribute="user">
+<div class="container mt-5">
+    <form:form method="post" modelAttribute="user" action="register">
         <div class="mb-3 row">
             <form:label path="username" cssClass="col-sm-2 col-form-label">Username: </form:label>
             <div class="col-sm-10">
-                <form:input cssClass="${mode == 'add' ? 'form-control' : 'form-control-plaintext'}" path="username" readonly="${mode != 'add'}"/>
+                <form:input cssClass="form-control" path="username" required="true"/>
             </div>
             <form:errors path="username" cssClass="ui-state-error-text"/>
         </div>
@@ -30,7 +25,7 @@
         <div class="mb-3 row">
             <form:label path="fullname" cssClass="col-sm-2 col-form-label">FullName: </form:label>
             <div class="col-sm-10">
-                <form:input cssClass="form-control" path="fullname" readonly="${mode == 'view'}"/>
+                <form:input cssClass="form-control" path="fullname"/>
             </div>
             <form:errors path="fullname" cssClass="ui-state-error-text"/>
         </div>
@@ -38,7 +33,7 @@
         <div class="mb-3 row">
             <form:label path="phone" cssClass="col-sm-2 col-form-label">Phone: </form:label>
             <div class="col-sm-10">
-                <form:input cssClass="form-control" path="phone" maxlength="8" max="99999999" type="number" readonly="${mode == 'view'}"/>
+                <form:input cssClass="form-control" path="phone" maxlength="8" max="99999999" type="number"/>
             </div>
             <form:errors path="phone" cssClass="ui-state-error-text"/>
         </div>
@@ -46,7 +41,7 @@
         <div class="mb-3 row">
             <form:label path="address" cssClass="col-sm-2 col-form-label">Address: </form:label>
             <div class="col-sm-10">
-                <form:textarea cssClass="form-control" path="address" readonly="${mode == 'view'}"/>
+                <form:textarea cssClass="form-control" path="address"/>
             </div>
             <form:errors path="address" cssClass="ui-state-error-text"/>
         </div>
@@ -54,28 +49,19 @@
         <div class="mb-3 row">
             <form:label path="password" cssClass="col-sm-2 col-form-label">Password: </form:label>
             <div class="col-sm-10">
-                <form:password cssClass="form-control" path="password" readonly="${mode == 'view'}"/>
+                <form:password cssClass="form-control" path="password" required="true"/>
             </div>
             <form:errors path="password" cssClass="ui-state-error-text"/>
         </div>
 
-        <security:authorize access="hasAnyAuthority('ADMIN')">
-            <div class="mb-3 row">
-                <form:label path="admin" cssClass="form-check-label">Is Admin: </form:label>
-                <div class="col-sm-10">
-                    <form:checkbox path="admin" cssClass="form-check-input" disabled="${mode == 'view'}"/>
-                </div>
-                <form:errors path="admin" cssClass="ui-state-error-text"/>
-            </div>
-        </security:authorize>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
         <br />
 
-        <c:if test="${mode != 'view'}">
-            <input type="submit" name="update" value="Update" />
-        </c:if>
+        <input type="submit" name="register" value="Register" />
 
     </form:form>
+    <a href="<c:url value="/login" />">already registered ? login</a>
 </div>
 
 </body>

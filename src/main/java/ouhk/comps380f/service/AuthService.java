@@ -14,6 +14,8 @@ public interface AuthService {
 
     boolean hasRoles(Authentication authentication, String... roles);
 
-    Account toAccount(Authentication authentication);
+    Account validateLogon(Authentication authentication);
+
+    String hash(String text);
 
 }

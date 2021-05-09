@@ -2,6 +2,7 @@ package ouhk.comps380f.dao;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Base64;
 
 
 @Entity
@@ -10,15 +11,14 @@ public class Comment implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
-
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     private Account account;
 
-    private String content;
+    private String body;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     private ShopItem item;
 
     public Account getAccount() {
@@ -37,17 +37,15 @@ public class Comment implements Serializable {
         this.item = item;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-
-    public String getContent() {
-        return content;
+    public String getBody() {
+        return body;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setBody(String body) {
+        this.body = body;
     }
-
 }

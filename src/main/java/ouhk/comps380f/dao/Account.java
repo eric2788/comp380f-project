@@ -19,7 +19,15 @@ public class Account implements Serializable {
     private Integer phone;
     private String fullname;
     private String address;
-    private Boolean admin;
+    private boolean admin;
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
 
     public String getUsername() {
         return username;
@@ -61,15 +69,6 @@ public class Account implements Serializable {
         this.address = address;
     }
 
-    public Boolean getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(Boolean admin) {
-        this.admin = admin;
-    }
-
-
     @Override
     public String toString() {
         return "Account{" +
@@ -78,7 +77,7 @@ public class Account implements Serializable {
                 ", phone=" + phone +
                 ", fullname='" + fullname + '\'' +
                 ", address='" + address + '\'' +
-                ", admin=" + admin +
+                ", admin='" + admin + '\'' +
                 '}';
     }
 }

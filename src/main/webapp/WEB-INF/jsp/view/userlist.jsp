@@ -17,14 +17,14 @@
     <ul class="list-group">
         <c:forEach var="user" items="${users}">
             <li class="list-group-item">
-                    ${user.username} (${user.admin ? 'User': 'Admin'})
-                        <a href="<c:url value="/user/view?id=${user.username}"/>">View</a>
-                        <a href="<c:url value="/user/edit?id=${user.username}"/>">Edit</a>
-                        <a href="<c:url value="/user/delete?id=${user.username}"/>">Delete</a>
+                    ${user.username} (${user.admin ? 'Admin': 'User'})
+                        <a href="<c:url value="/user/${user.username}"/>">View</a>
+                        <a href="<c:url value="/user/edit/${user.username}"/>">Edit</a>
+                        <a href="<c:url value="/user/delete/${user.username}"/>">Delete</a>
             </li>
         </c:forEach>
     </ul>
-    <security:authorize access="hasRole('ADMIN')" >
+    <security:authorize access="hasAnyAuthority('ADMIN')" >
         <a href="<c:url value="/user/add" />"><button class="btn btn-primary">Add</button></a>
     </security:authorize>
 </div>

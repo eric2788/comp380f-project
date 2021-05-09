@@ -4,5 +4,5 @@ import org.springframework.stereotype.Repository;
 import ouhk.comps380f.dao.Comment;
 
 @Repository
-public interface CommentRepository extends CrudRepository<Comment, String> {
+public interface CommentRepository extends CrudRepository<Comment, Integer> {
 }

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b:beans xmlns="http://www.springframework.org/schema/security"
+         xmlns:b="http://www.springframework.org/schema/beans"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jpa="http://www.springframework.org/schema/mvc"
+         xmlns:context="http://www.springframework.org/schema/context"
+
+         xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    <http auto-config="true">
+
+        <intercept-url pattern="/item/add/**" access="hasAnyAuthority('ADMIN')"/>
+        <intercept-url pattern="/item/edit/**" access="hasAnyAuthority('ADMIN')"/>
+        <intercept-url pattern="/item/delete/**" access="hasAnyAuthority('ADMIN')"/>
+        <intercept-url pattern="/user/**" access="hasAnyAuthority('ADMIN')"/>
+
+        <intercept-url pattern="/comment/**" access="isAuthenticated()" />
+        <intercept-url pattern="/order/**" access="isAuthenticated()" />
+
+        <intercept-url pattern="/login*" access="permitAll()" />
+
+        <form-login login-page="/login"
+                    authentication-failure-url="/login?error"
+                    username-parameter="username"
+                    password-parameter="password" />
+
+        <logout logout-url="/logout"
+                logout-success-url="/login?logout"
+                invalidate-session="true"
+                delete-cookies="JSESSIONID" />
+        <!-- enable remember me -->
+        <remember-me
+                user-service-ref="userDetailService"
+                key="uniqueAndSecret"
+                token-validity-seconds="1209600"
+                remember-me-parameter="remember-me" />
+    </http>
+    <b:bean id="userDetailService" class="ouhk.comps380f.security.UserDetailService"/>
+    <authentication-manager>
+        <authentication-provider user-service-ref="userDetailService"/>
+    </authentication-manager>
+</b:beans>

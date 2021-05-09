@@ -6,7 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>${mode == 'add' ? 'Add' : mode == 'view' ? 'View' : 'Update'} User</title>
@@ -16,12 +15,15 @@
 <%@include file="../parts/header.jsp"%>
 
 <div class="container">
-    <form:form method="post" modelAttribute="item" action="update" enctype="multipart/form-data">
-
+    <% if (request.getParameter("addedCart") != null) {%>
+        <div class="alert alert-success">Added to cart.</div>
+    <% } %>
+    <form:form method="post" modelAttribute="item" action="">
+        <form:hidden path="id" readonly="true" />
         <div class="mb-3 row">
             <form:label path="name" cssClass="col-sm-2 col-form-label">Name: </form:label>
             <div class="col-sm-10">
-                <form:input cssClass="'form-control'" path="name" readonly="${mode == 'view'}"/>
+                <form:input cssClass="form-control" path="name" readonly="${mode == 'view'}"/>
             </div>
             <form:errors path="name" cssClass="ui-state-error-text"/>
         </div>
@@ -42,20 +44,24 @@
             <form:errors path="price" cssClass="ui-state-error-text"/>
         </div>
 
-        <div class="mb-3 row">
-            <form:label path="photo" cssClass="col-sm-2 col-form-label">Photo: </form:label>
+        <!--div class="mb-3 row">
+            <label for="file" class="col-sm-2 col-form-label">Photo: </label>
             <div class="col-sm-10">
                 <c:choose>
                     <c:when test="${mode == 'view'}">
-                        <img alt="photo" src="data:image/png;base64, ${item.photo}"/>
+                       <c:forEach var="photo" items="${item.photos}">
+                           <img id="file" alt="photo" src="data:image/png;base64, ${photo.base64}"/>
+                       </c:forEach>
+                        <c:if test="${empty item.photos}">
+                            <small>No Photo</small>
+                        </c:if>
                     </c:when>
                     <c:otherwise>
-                        <input type="file" name="files" accept="image/jpg, image/png" multiple="multiple"/>
+                        <input type="file" name="files" id="file" accept="image/jpg, image/png" multiple="multiple"/>
                     </c:otherwise>
                 </c:choose>
             </div>
-            <form:errors path="photo" cssClass="ui-state-error-text"/>
-        </div>
+        </div-->
 
         <div class="mb-3 row">
             <form:label path="available" cssClass="form-check-label">Available: </form:label>
@@ -65,8 +71,6 @@
             <form:errors path="available" cssClass="ui-state-error-text"/>
         </div>
 
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-
         <br />
 
         <c:if test="${mode != 'view'}">
@@ -74,6 +78,27 @@
         </c:if>
 
     </form:form>
+
+
+        <c:if test="${mode == 'view'}">
+            <security:authorize access="isAuthenticated()">
+                <a href="<c:url value="/order/add/${item.id}"/>"><button class="btn btn-primary">Add To Cart</button></a>
+                <a href="<c:url value="/comment/add/${item.id}"/>"><button class="btn btn-success">Comment</button></a>
+            </security:authorize>
+
+            <h2>Comments</h2>
+            <ul class="list-group list-group-flush">
+                <c:forEach var="comment" items="${item.comments}">
+                    <li class="list-group-item">
+                            ${comment.account.username}: ${comment.body}
+                             <a class="ml-3" href="<c:url value="/comment/delete/${comment.id}?itemid=${item.id}" />">Delete</a>
+                    </li>
+                </c:forEach>
+                <c:if test="${empty item.comments}">
+                    list is empty
+                </c:if>
+            </ul>
+        </c:if>
 </div>
 
 </body>

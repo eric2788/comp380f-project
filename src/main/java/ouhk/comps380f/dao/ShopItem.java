@@ -1,13 +1,13 @@
 package ouhk.comps380f.dao;
 
+import net.bytebuddy.build.ToStringPlugin;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 @Entity
@@ -16,32 +16,37 @@ public class ShopItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     private String name;
     private String description;
-    private Double price;
-    private Boolean available;
+    private double price;
+    private boolean available;
 
-    @OneToMany
-    private Set<Photo> photos = new HashSet<>();
+    @Transient
+    private List<MultipartFile> files = new ArrayList<>();
+
+    @OneToMany(mappedBy = "item", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
+    private final Set<Photo> photos = new HashSet<>();
 
     public Set<Photo> getPhotos() {
         return photos;
     }
 
-    @OneToMany
+    @OneToMany(mappedBy = "item", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
     private final Set<Comment> comments = new HashSet<>();
 
     public Set<Comment> getComments() {
         return comments;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -61,33 +66,28 @@ public class ShopItem implements Serializable {
         this.description = description;
     }
 
-    public Double getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public Boolean getAvailable() {
+    public boolean isAvailable() {
         return available;
     }
 
-    public void setAvailable(Boolean available) {
+    public void setAvailable(boolean available) {
         this.available = available;
     }
 
-
-    @Override
-    public String toString() {
-        return "ShopItem{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", available=" + available +
-                ", photo='" + Arrays.toString(photos.toArray()) + '\'' +
-                ", comments=" + comments +
-                '}';
+    public void setFiles(List<MultipartFile> files) {
+        this.files = files;
     }
+
+    public List<MultipartFile> getFiles() {
+        return files;
+    }
+
 }

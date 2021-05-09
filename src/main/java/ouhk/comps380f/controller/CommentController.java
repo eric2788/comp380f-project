@@ -1,20 +1,22 @@
 
 package ouhk.comps380f.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ouhk.comps380f.dao.Account;
 import ouhk.comps380f.dao.Comment;
 import ouhk.comps380f.dao.ShopItem;
+import ouhk.comps380f.exception.CustomException;
 import ouhk.comps380f.repository.CommentRepository;
 import ouhk.comps380f.repository.ShopItemRepository;
 import ouhk.comps380f.service.AuthService;
+import ouhk.comps380f.service.CommentService;
 
 import java.util.Optional;
 
@@ -22,50 +24,32 @@ import java.util.Optional;
 @RequestMapping("comment")
 public class CommentController {
 
-    private final CommentRepository commentRepository;
-    private final ShopItemRepository shopItemRepository;
-    private final AuthService authService;
-
     @Autowired
-    public CommentController(CommentRepository commentRepository, ShopItemRepository shopItemRepository, AuthService authService) {
-        this.commentRepository = commentRepository;
-        this.shopItemRepository = shopItemRepository;
-        this.authService = authService;
+    private CommentRepository commentRepository;
+    @Autowired
+    private ShopItemRepository shopItemRepository;
+    @Autowired
+    private AuthService authService;
+    @Autowired
+    private CommentService commentService;
+    private final Logger logger = LoggerFactory.getLogger(CommentController.class);
+
+
+    @GetMapping("add/{id}")
+    public ModelAndView add(@PathVariable("id") int id) {
+        return new ModelAndView("comment", "comment", new Comment());
     }
 
-    @GetMapping("add")
-    public ModelAndView add(@RequestParam("itemid") String itemid, Authentication authentication) {
-        Optional<ShopItem> itemopt = shopItemRepository.findById(itemid);
-        Account account = authService.toAccount(authentication);
-        if (account == null || !account.getAdmin()) return new ModelAndView("index");
-        if (itemopt.isPresent()) {
-            Comment cmt = new Comment();
-            ShopItem item = itemopt.get();
-            cmt.setItem(item);
-            cmt.setAccount(account);
-            return new ModelAndView("comment", "comment", cmt);
-        } else {
-            return new ModelAndView("index");
-        }
+    @GetMapping("delete/{id}")
+    public String delete(@PathVariable("id") int id, Authentication authentication, @RequestParam("itemid") int itemid) {
+        commentService.deleteComment(id, authentication.getName());
+        return "redirect:/item/"+itemid;
     }
 
-    @GetMapping("delete")
-    public String delete(@RequestParam("id") String id) {
-        Optional<Comment> cmtOpt = commentRepository.findById(id);
-        if (cmtOpt.isPresent()) {
-            Comment cm = cmtOpt.get();
-            Integer itemid = cm.getItem().getId();
-            commentRepository.deleteById(id);
-            return "redirect:/item?id=" + itemid;
-        } else {
-            return "index";
-        }
-    }
-
-    @PostMapping("add")
-    public String postCreate(Comment comment) {
-        System.out.println("preparing to save: " + comment.toString());
-        commentRepository.save(comment);
-        return "redirect:/item";
+    @Transactional
+    @PostMapping("add/{id}")
+    public String postCreate(@PathVariable("id") int id, Comment comment, Authentication authentication) {
+        commentService.createComment(comment, authentication.getName(), id);
+        return "redirect:/item/"+id;
     }
 }

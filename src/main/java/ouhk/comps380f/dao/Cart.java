@@ -10,14 +10,13 @@ public class Cart implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     private Account account;
 
-    @ManyToOne
-    private ShopItem shopItem;
-
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    private ShopItem item;
 
     private Integer amount;
 
@@ -25,20 +24,24 @@ public class Cart implements Serializable {
         return account;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setAccount(Account account) {
         this.account = account;
     }
 
-    public ShopItem getShopItem() {
-        return shopItem;
+    public ShopItem getItem() {
+        return item;
     }
 
-    public void setShopItem(ShopItem shopItem) {
-        this.shopItem = shopItem;
+    public void setItem(ShopItem shopItem) {
+        this.item = shopItem;
     }
 
     public Integer getAmount() {
