@@ -41,8 +41,8 @@ public class OrderServiceImpl implements OrderService{
     @Transactional
     @Override
     public void removeOrder(int orderid, String username) {
-        //Cart cart = cartRepository.findById(orderid).orElseThrow(() -> new CustomException("not found order"));
-        //if (!cart.getAccount().getUsername().equals(username)) throw new CustomException("this order is not yours");
+        Cart cart = cartRepository.findById(orderid).orElseThrow(() -> new CustomException("not found order"));
+        if (!cart.getAccount().getUsername().equals(username)) throw new CustomException("this order is not yours");
         cartRepository.deleteById(orderid);
     }
 
