@@ -17,6 +17,6 @@ comp380f-project for university
       
 3. the list of additional features implementedand any necessary details for running them successfully
 additional features:  Batchuploading of photos and it successfully pass it to the database 
-                      Drag-and-Drop of files for uploading photos 
+                      Drag-and-Drop of files for uploading photos which not yet completed 
                       Storing photos to the Apache Derbydatabase and the input progress occur error
-                      Addingand showingfavorite menu items for a registered user????
+                      Addingand showingfavorite menu items for a registered user which not yet completed 
