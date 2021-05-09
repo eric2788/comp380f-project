@@ -11,7 +11,7 @@ import ouhk.comps380f.dao.Account;
 import ouhk.comps380f.repository.UserRepository;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("user")
 public class UserController {
 
 

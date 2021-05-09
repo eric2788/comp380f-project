@@ -20,7 +20,6 @@
             <li class="list-group-item">
                     <!-- <a href="addNewProduct.jsp">Add New Product</a> -->
                     <a href="<c:url value="/item?id=${item.name}"/> ">${item.name}</a>
-                    <a href="<c:url value="/item/add?id=${item.name}"/> ">Add</a>
                     <a href="<c:url value="/item/edit?id=${item.name}"/> ">Edit</a>
                     <a href="<c:url value="/item/delete?id=${item.name}"/> ">Delete</a>
             </li>

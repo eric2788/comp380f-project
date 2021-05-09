@@ -1,8 +1,12 @@
 package ouhk.comps380f.dao;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -18,6 +22,13 @@ public class ShopItem implements Serializable {
     private String description;
     private Double price;
     private Boolean available;
+
+    @OneToMany
+    private Set<Photo> photos = new HashSet<>();
+
+    public Set<Photo> getPhotos() {
+        return photos;
+    }
 
     @OneToMany
     private final Set<Comment> comments = new HashSet<>();
@@ -64,5 +75,19 @@ public class ShopItem implements Serializable {
 
     public void setAvailable(Boolean available) {
         this.available = available;
+    }
+
+
+    @Override
+    public String toString() {
+        return "ShopItem{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", available=" + available +
+                ", photo='" + Arrays.toString(photos.toArray()) + '\'' +
+                ", comments=" + comments +
+                '}';
     }
 }
