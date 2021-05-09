@@ -29,7 +29,6 @@ public class OrderServiceImpl implements OrderService{
     @Transactional
     @Override
     public void createOrder(int itemid, String username) {
-        if (cartRepository.existsCartByItemId(itemid)) throw new CustomException("this item already in your cart");
         ShopItem item = shopItemRepository.findById(itemid).orElseThrow(() -> new CustomException("no item find with id "+itemid));
         if (!item.isAvailable()) throw new CustomException("this item is not available");
         Account account = userRepository.findById(username).orElseThrow(() -> new CustomException("username not found: "+username));

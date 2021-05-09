@@ -11,6 +11,4 @@ public interface CartRepository extends CrudRepository<Cart, Integer> {
 
     List<Cart> findByAccount_Username(String username);
 
-    boolean existsCartByItemId(int itemid);
-
 }
