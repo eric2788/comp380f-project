@@ -9,14 +9,14 @@ comp380f-project for university
       
       
 2. the usernames and passwords for an administrator account and a registered useraccount
-      admin acccount:
-      admin password:
-      registered acccount:
-      registered password:
+      admin acccount: root
+      admin password: root1234
+      registered acccount: /
+      registered password: /
       
       
 3. the list of additional features implementedand any necessary details for running them successfully
-additional features:  Batchuploading of photos 
+additional features:  Batchuploading of photos and it successfully pass it to the database 
                       Drag-and-Drop of files for uploading photos 
                       Storing photos to the Apache Derbydatabase and the input progress occur error
                       Addingand showingfavorite menu items for a registered user????
