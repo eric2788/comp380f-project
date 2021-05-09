@@ -1,8 +1,8 @@
 # comp380f-project
 comp380f-project for university
-1. the databasename, username& passwordfor your Apache Derbydatabase
-2. the usernamesand passwordsfor an administratoraccount and a registered useraccount, and
-3. the list ofadditional features implementedand any necessary details for running them successfully
+1. the databasename, username& password for your Apache Derbydatabase
+2. the usernames and passwords for an administrator account and a registered useraccount, and
+3. the list of additional features implementedand any necessary details for running them successfully
 
 1.    database name: comps380f
       username: sa 
