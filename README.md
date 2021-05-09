@@ -13,6 +13,7 @@ comp380f-project for university
       registered acccount:
       registered password:
     
-3.    additional features:  file upload
-                            test
-                            test
+3.    additional features:  Batchuploading of photos
+                            Drag-and-Drop of files for uploading photos
+                            Storing photos to the Apache Derbydatabase
+                            Addingand showingfavorite menu items for a registered user????
