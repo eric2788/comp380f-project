@@ -19,7 +19,7 @@ import ouhk.comps380f.service.AuthService;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/comment")
+@RequestMapping("comment")
 public class CommentController {
 
     private final CommentRepository commentRepository;
@@ -56,7 +56,7 @@ public class CommentController {
             Comment cm = cmtOpt.get();
             Integer itemid = cm.getItem().getId();
             commentRepository.deleteById(id);
-            return "redirect:/shopitem?itemid=" + itemid;
+            return "redirect:/item?id=" + itemid;
         } else {
             return "index";
         }
@@ -66,6 +66,6 @@ public class CommentController {
     public String postCreate(Comment comment) {
         System.out.println("preparing to save: " + comment.toString());
         commentRepository.save(comment);
-        return "redirect:/shopitem";
+        return "redirect:/item";
     }
 }
