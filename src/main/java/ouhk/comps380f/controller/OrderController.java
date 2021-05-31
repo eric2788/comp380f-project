@@ -8,27 +8,14 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ouhk.comps380f.repository.CartRepository;
-import ouhk.comps380f.repository.ShopItemRepository;
-import ouhk.comps380f.service.AuthService;
+import org.springframework.web.bind.annotation.RequestParam;
 import ouhk.comps380f.service.OrderService;
-import ouhk.comps380f.service.ValidateService;
+
+import java.util.Arrays;
 
 @Controller
 @RequestMapping("order")
 public class OrderController {
-
-    @Autowired
-    private CartRepository cartRepository;
-
-    @Autowired
-    private ShopItemRepository shopItemRepository;
-
-    @Autowired
-    private ValidateService validateService;
-
-    @Autowired
-    private AuthService authService;
 
     @Autowired
     private OrderService orderService;

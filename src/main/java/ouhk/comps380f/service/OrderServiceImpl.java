@@ -1,7 +1,6 @@
 package ouhk.comps380f.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ouhk.comps380f.dao.Account;
@@ -12,7 +11,7 @@ import ouhk.comps380f.repository.CartRepository;
 import ouhk.comps380f.repository.ShopItemRepository;
 import ouhk.comps380f.repository.UserRepository;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class OrderServiceImpl implements OrderService{
@@ -50,5 +49,13 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public List<Cart> listOrders(String username) {
         return cartRepository.findByAccount_Username(username);
+    }
+
+    @Transactional
+    @Override
+    public void deleteAll(int[] ids) {
+        for (int id : ids) {
+            cartRepository.deleteById(id);
+        }
     }
 }

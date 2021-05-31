@@ -34,8 +34,11 @@ public class CommentServiceImpl implements CommentService{
     @Transactional
     @Override
     public void deleteComment(int id, String username) {
-        //Comment comment = commentRepository.findById(id).orElseThrow(() -> new CustomException("comment not found: "+id));
-        //if (!comment.getAccount().isAdmin() && !comment.getAccount().getUsername().equals(username)) throw new CustomException("comment is not yours");
+        Comment comment = commentRepository.findById(id).orElseThrow(() -> new CustomException("comment not found: "+id));
+        if (!comment.getAccount().isAdmin() && !comment.getAccount().getUsername().equals(username)) throw new CustomException("comment is not yours");
         commentRepository.deleteById(id);
+        ShopItem shopItem = comment.getItem();
+        shopItem.getComments().remove(comment);
+        shopItemRepository.save(shopItem);
     }
 }

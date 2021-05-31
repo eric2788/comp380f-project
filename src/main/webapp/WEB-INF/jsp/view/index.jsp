@@ -22,6 +22,7 @@
                     <security:authorize access="hasAnyAuthority('ADMIN')">
                         <a href="<c:url value="/item/edit/${item.id}"/> ">Edit</a>
                         <a href="<c:url value="/item/delete/${item.id}"/> ">Delete</a>
+                        <a href="<c:url value="/item/edit/${item.id}/photo"/>">Manage Photo</a>
                     </security:authorize>
             </li>
         </c:forEach>

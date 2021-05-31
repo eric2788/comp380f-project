@@ -15,6 +15,7 @@ import ouhk.comps380f.repository.ShopItemRepository;
 import ouhk.comps380f.repository.UserRepository;
 import ouhk.comps380f.service.AuthService;
 
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.stream.Collectors;
 
@@ -37,6 +38,12 @@ public class IndexController {
     public String getIndex(ModelMap modelMap) {
         modelMap.addAttribute("items", shopItemRepository.findAll());
         return "index";
+    }
+
+    @GetMapping("logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "redirect:/login";
     }
 
     @GetMapping("login")

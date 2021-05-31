@@ -18,7 +18,7 @@
     <% if (request.getParameter("addedCart") != null) {%>
         <div class="alert alert-success">Added to cart.</div>
     <% } %>
-    <form:form method="post" modelAttribute="item" action="">
+    <form:form method="post" modelAttribute="item">
         <form:hidden path="id" readonly="true" />
         <div class="mb-3 row">
             <form:label path="name" cssClass="col-sm-2 col-form-label">Name: </form:label>
@@ -44,24 +44,22 @@
             <form:errors path="price" cssClass="ui-state-error-text"/>
         </div>
 
-        <!--div class="mb-3 row">
+        <div class="mb-3 row">
             <label for="file" class="col-sm-2 col-form-label">Photo: </label>
             <div class="col-sm-10">
                 <c:choose>
-                    <c:when test="${mode == 'view'}">
-                       <c:forEach var="photo" items="${item.photos}">
-                           <img id="file" alt="photo" src="data:image/png;base64, ${photo.base64}"/>
-                       </c:forEach>
-                        <c:if test="${empty item.photos}">
-                            <small>No Photo</small>
-                        </c:if>
+                    <c:when test="${empty item.photos}">
+                        <small>No Photo</small>
                     </c:when>
                     <c:otherwise>
-                        <input type="file" name="files" id="file" accept="image/jpg, image/png" multiple="multiple"/>
+                        <c:forEach var="photo" items="${item.photos}">
+                            <img id="file" alt="photo" src="data:image/png;base64, ${photo.base64}"/>
+                            <br />
+                        </c:forEach>
                     </c:otherwise>
                 </c:choose>
             </div>
-        </div-->
+        </div>
 
         <div class="mb-3 row">
             <form:label path="available" cssClass="form-check-label">Available: </form:label>

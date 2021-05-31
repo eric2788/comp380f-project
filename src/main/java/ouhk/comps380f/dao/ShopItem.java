@@ -23,9 +23,6 @@ public class ShopItem implements Serializable {
     private double price;
     private boolean available;
 
-    @Transient
-    private List<MultipartFile> files = new ArrayList<>();
-
     @OneToMany(mappedBy = "item", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(FetchMode.SUBSELECT)
     private final Set<Photo> photos = new HashSet<>();
@@ -80,14 +77,6 @@ public class ShopItem implements Serializable {
 
     public void setAvailable(boolean available) {
         this.available = available;
-    }
-
-    public void setFiles(List<MultipartFile> files) {
-        this.files = files;
-    }
-
-    public List<MultipartFile> getFiles() {
-        return files;
     }
 
 }
